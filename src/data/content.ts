@@ -11,18 +11,17 @@ export interface ServiceItem {
   typicalTimeline: string;
 }
 
-export interface ProjectItem {
+export interface SolutionItem {
   id: string;
   title: string;
-  client: string;
+  solutionType: string;
   category: 'web' | 'mobile' | 'ai' | 'automation';
   categoryLabel: string;
   summary: string;
-  challenge: string;
-  solution: string;
-  impactMetric: string;
-  impactDetail: string;
+  architectureHighlight: string;
+  coreFeatures: string[];
   techStack: string[];
+  estimatedSprint: string;
   accentColor: string;
 }
 
@@ -59,15 +58,13 @@ export const COMPANY_INFO = {
     },
   ],
   heroHeadline: 'Custom Websites, Mobile Apps & AI Solutions That Grow Your Business',
-  heroSubheadline: 'Founded by Ram Chavan & Varad Edke in Karvenagar, Pune. We build lightning-fast web platforms, mobile apps, autonomous AI agents, and business workflow automations for startups and expanding businesses.',
+  heroSubheadline: 'Founded by Ram Chavan & Varad Edke in Karvenagar, Pune. We build lightning-fast web platforms, cross-platform mobile apps, autonomous AI agents, and enterprise workflow automations.',
   email: 'varad.edke1803@gmail.com',
   ramEmail: 'ramchavan00001@gmail.com',
   varadEmail: 'varad.edke1803@gmail.com',
-  secondaryEmail: 'ramchavan00001@gmail.com',
   phone: '+91 83298 63893',
   ramPhone: '+91 93590 32001',
   varadPhone: '+91 83298 63893',
-  secondaryPhone: '+91 93590 32001',
   whatsappUrl: 'https://wa.me/918329863893?text=Hello%20Friends%20IT%20Solutions,%20I%20would%20like%20to%20discuss%20a%20project%20quote',
   ramWhatsappUrl: 'https://wa.me/919359032001?text=Hello%20Ram,%20I%20would%20like%20to%20discuss%20a%20project%20with%20Friends%20IT%20Solutions',
   varadWhatsappUrl: 'https://wa.me/918329863893?text=Hello%20Varad,%20I%20would%20like%20to%20discuss%20a%20project%20with%20Friends%20IT%20Solutions',
@@ -78,9 +75,10 @@ export const COMPANY_INFO = {
     postalCode: '411052',
     country: 'India',
     fullFormatted: 'Karvenagar, Pune, Maharashtra 411052, India',
+    mapsUrl: 'https://maps.google.com/?q=Karvenagar,+Pune,+Maharashtra+411052',
   },
   hours: 'Monday – Saturday: 9:00 AM – 8:00 PM IST',
-  supportSla: 'Instant email confirmation & guaranteed call within 2 hours of inquiry',
+  supportSla: 'Guaranteed call or WhatsApp reply within 2 hours',
 };
 
 export const SERVICES: ServiceItem[] = [
@@ -89,8 +87,8 @@ export const SERVICES: ServiceItem[] = [
     title: 'Custom Website Development',
     category: 'Web Platforms',
     iconName: 'Globe',
-    shortDesc: 'Modern, ultra-fast websites and custom web portals built with React, Next.js, and clean Tailwind styling designed to convert visitors.',
-    longDesc: 'We develop beautiful, responsive, and search-engine optimized websites engineered for sub-second page loads. From clean corporate websites to full SaaS dashboards, every build follows modern accessibility standards and clean code architecture.',
+    shortDesc: 'Modern, ultra-fast websites and web portals built with React, Next.js, and clean Tailwind styling designed to convert visitors.',
+    longDesc: 'We develop responsive, search-engine optimized websites engineered for sub-second page loads. From clean corporate websites to full SaaS dashboards, every build follows modern accessibility standards and clean code architecture.',
     features: [
       'Next.js 15 & React responsive components',
       'High-speed page load (< 1s Core Web Vitals)',
@@ -188,164 +186,168 @@ export const SERVICES: ServiceItem[] = [
   },
 ];
 
-export const PROJECTS: ProjectItem[] = [
+export const SOLUTIONS: SolutionItem[] = [
   {
-    id: 'finpulse',
-    title: 'FinPulse Accounting & Analytics Web Portal',
-    client: 'FinPulse Advisory',
+    id: 'ecommerce-platform',
+    title: 'Next-Gen E-Commerce & Retail Web Portal',
+    solutionType: 'High-Conversion Storefront',
     category: 'web',
     categoryLabel: 'Web Platform',
-    summary: 'Responsive financial portfolio and reconciliation dashboard built for real-time reporting and multi-branch tracking.',
-    challenge: 'Client needed an uncluttered, high-speed financial portal to replace slow Excel sheets and visualize daily branch transactions without delays.',
-    solution: 'Built a clean React & Next.js dashboard with instant table filtering, sub-second queries, and automated PDF statement generation.',
-    impactMetric: '+320%',
-    impactDetail: 'Speed increase in report generation with sub-second page loads',
-    techStack: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'PostgreSQL'],
+    summary: 'Ultra-fast headless online storefront with instant product search, Razorpay/UPI checkout, automated WhatsApp invoice notifications, and real-time inventory sync.',
+    architectureHighlight: 'Next.js 15 Server-Side Rendering with sub-second page loads & edge caching.',
+    coreFeatures: [
+      'Sub-second page loads with mobile-first checkout',
+      'Integrated Razorpay, Paytm UPI, Card & Cash on Delivery',
+      'Instant WhatsApp order confirmation & tracking dispatch',
+      'Real-time admin dashboard for orders, sales & coupons',
+    ],
+    techStack: ['Next.js 15', 'React 19', 'TypeScript', 'Tailwind CSS', 'PostgreSQL', 'Razorpay API'],
+    estimatedSprint: '14 to 20 days',
     accentColor: 'blue',
   },
   {
-    id: 'apexcare',
-    title: 'ApexCare Clinic Patient & Telehealth Mobile App',
-    client: 'ApexCare Health Services',
+    id: 'clinic-telehealth',
+    title: 'Healthcare Clinic Management & Patient App',
+    solutionType: 'Patient & Doctor Portal',
     category: 'mobile',
     categoryLabel: 'Mobile App',
-    summary: 'Cross-platform iOS and Android mobile app for instant doctor consultation booking, medical records, and digital prescriptions.',
-    challenge: 'Patients struggled with long phone hold times and scattered paper prescriptions across two medical clinics.',
-    solution: 'Designed and deployed an easy-to-use React Native app with one-tap doctor appointment booking and secure WhatsApp reminders.',
-    impactMetric: '15,000+',
-    impactDetail: 'Active clinic patients booking visits through the mobile application',
-    techStack: ['React Native', 'Node.js', 'PostgreSQL', 'Razorpay', 'AWS'],
+    summary: 'Cross-platform iOS and Android mobile app paired with a web admin portal for seamless doctor appointment booking, digital prescriptions, and automated WhatsApp reminders.',
+    architectureHighlight: 'Unified React Native codebase deployed to iOS App Store & Android Play Store.',
+    coreFeatures: [
+      'One-tap doctor consultation booking with live queue tokens',
+      'Secure digital health records and instant PDF prescriptions',
+      'Automated WhatsApp appointment reminders 2 hours prior',
+      'Role-based staff login for receptionists and doctors',
+    ],
+    techStack: ['React Native', 'Node.js', 'Express', 'PostgreSQL', 'AWS S3', 'WhatsApp Cloud API'],
+    estimatedSprint: '3 to 5 weeks',
     accentColor: 'indigo',
   },
   {
-    id: 'synthetix-ai',
-    title: 'SmartDesk WhatsApp AI Customer Support Agent',
-    client: 'SmartDesk Retail Pune',
+    id: 'whatsapp-ai-agent',
+    title: 'Autonomous WhatsApp AI Customer Agent',
+    solutionType: '24/7 Intelligent Support Bot',
     category: 'ai',
     categoryLabel: 'AI & Automation',
-    summary: '24/7 intelligent conversational AI agent integrated with WhatsApp that answers product inquiries and schedules customer visits.',
-    challenge: 'Retail staff were overwhelmed handling hundreds of repetitive WhatsApp price and availability queries every day.',
-    solution: 'Integrated an autonomous AI agent backed by live inventory data that resolves inquiries instantly in English, Marathi, and Hindi.',
-    impactMetric: '85%',
-    impactDetail: 'Automated resolution of repetitive inquiries within 5 seconds',
-    techStack: ['Python', 'FastAPI', 'LangChain', 'Gemini API', 'WhatsApp Cloud'],
-    accentColor: 'teal',
+    summary: 'Intelligent AI conversational assistant connected to Meta WhatsApp Cloud API that resolves customer queries, shares product catalogs, qualifies leads, and logs appointments automatically.',
+    architectureHighlight: 'LangChain & Gemini LLM with private retrieval (RAG) and zero-hallucination guardrails.',
+    coreFeatures: [
+      'Multilingual conversational support in English, Hindi & Marathi',
+      'Instant answers to pricing, product specs, and business hours',
+      'Direct integration with Google Sheets, Excel & CRM databases',
+      'Human handoff alert to Ram or Varad when complex deals arise',
+    ],
+    techStack: ['Python', 'FastAPI', 'LangChain', 'Gemini API', 'WhatsApp Cloud API', 'pgvector'],
+    estimatedSprint: '10 to 18 days',
+    accentColor: 'emerald',
   },
   {
-    id: 'logixflow',
-    title: 'LogixFlow Order & Dispatch Automation Pipeline',
-    client: 'LogixFlow Logistics',
+    id: 'erp-workflow-pipeline',
+    title: 'Automated Invoicing & ERP Workflow Pipeline',
+    solutionType: 'Business Automation',
     category: 'automation',
     categoryLabel: 'Workflow Automation',
-    summary: 'Automated order ingestion and dispatch tracking connecting e-commerce storefronts with regional warehouse dispatchers.',
-    challenge: 'Manual order re-entry between Shopify, Google Sheets, and shipping partners caused daily shipment delays and duplicate entries.',
-    solution: 'Engineered automated webhook orchestrations with error-handling queues that generate labels and trigger customer SMS alerts.',
-    impactMetric: '99.9%',
-    impactDetail: 'Accuracy rate in automated order processing across 3,500 daily parcels',
-    techStack: ['Node.js', 'n8n', 'Docker', 'Webhooks', 'REST APIs'],
+    summary: 'Event-driven automation pipeline connecting customer orders, Tally/Zoho accounting, and warehouse dispatch without requiring any manual copy-pasting.',
+    architectureHighlight: 'Webhook-driven message queue with automatic retry logic and error alerting.',
+    coreFeatures: [
+      'Auto-generation of GST compliant invoices on purchase',
+      'Two-way synchronization between CRM and Tally ERP',
+      'Real-time Slack / WhatsApp notification on high-value orders',
+      'Comprehensive audit log of every processed transaction',
+    ],
+    techStack: ['Node.js', 'Python', 'n8n', 'Webhooks', 'Docker', 'Google Cloud Platform'],
+    estimatedSprint: '7 to 14 days',
+    accentColor: 'amber',
+  },
+  {
+    id: 'real-estate-showcase',
+    title: 'Property Showcase & Virtual Tour Portal',
+    solutionType: 'Interactive Real Estate Showcase',
+    category: 'web',
+    categoryLabel: 'Web Platform',
+    summary: 'Visually stunning real estate portal featuring high-definition photo galleries, interactive floor plans, instant EMI calculators, and 1-tap WhatsApp visit scheduling.',
+    architectureHighlight: 'Optimized image pipelines with progressive blur-up loading and dynamic maps.',
+    coreFeatures: [
+      'Interactive unit floor plans and virtual walkthroughs',
+      'Live mortgage & EMI financial calculator with down-payment sliders',
+      'Immediate lead capture routed to sales team with visit preferences',
+      'SEO-optimized property listings with structured JSON-LD schema',
+    ],
+    techStack: ['React', 'Next.js', 'Tailwind CSS', 'Supabase', 'Google Maps API'],
+    estimatedSprint: '12 to 18 days',
     accentColor: 'blue',
   },
   {
-    id: 'proptech-prime',
-    title: 'Aura Realty Virtual Property Showcase',
-    client: 'Aura Properties Pune',
+    id: 'saas-analytics-dashboard',
+    title: 'Multi-Tenant SaaS Cloud Analytics Dashboard',
+    solutionType: 'Cloud SaaS Application',
     category: 'web',
     categoryLabel: 'Web Platform',
-    summary: 'Clean, elegant real estate web portal featuring high-definition photo galleries, floor plans, and instant EMI calculators.',
-    challenge: 'Static property PDF brochures resulted in low engagement and difficulty for NRI clients to explore layouts remotely.',
-    solution: 'Created an uncluttered, modern property showcase web platform with interactive layout tours and direct WhatsApp agent booking.',
-    impactMetric: '+140%',
-    impactDetail: 'Increase in qualified property visit bookings in the first 60 days',
-    techStack: ['React', 'Next.js', 'Tailwind CSS', 'Supabase'],
+    summary: 'Secure, modern cloud dashboard with role-based access control, real-time KPI graphs, subscription billing, and sub-second table filtering for high-volume data.',
+    architectureHighlight: 'Modular component architecture with strict TypeScript verification and secure JWT auth.',
+    coreFeatures: [
+      'Interactive time-series charts and customizable KPI cards',
+      'Multi-role permissions (Admin, Manager, Viewer)',
+      'Automated scheduled report generation in Excel and PDF formats',
+      'Dark and light mode responsive interfaces',
+    ],
+    techStack: ['React 19', 'TypeScript', 'Tailwind CSS', 'Node.js', 'PostgreSQL', 'Docker'],
+    estimatedSprint: '3 to 6 weeks',
     accentColor: 'indigo',
   },
-  {
-    id: 'omnico-ai',
-    title: 'LeadQual AI Voice & Lead Screening Bot',
-    client: 'OmniService Enterprises',
-    category: 'ai',
-    categoryLabel: 'AI & Automation',
-    summary: 'Automated lead response bot that calls new web inquiries within 60 seconds to qualify requirements and book calendar demos.',
-    challenge: 'Inbound web form leads had a 4-hour delay before sales reps called back, leading to a 35% drop in conversion.',
-    solution: 'Implemented an instant AI caller that dials leads immediately upon form submission, answers questions, and confirms appointments.',
-    impactMetric: '< 60s',
-    impactDetail: 'Average response time to incoming website leads, doubling conversions',
-    techStack: ['Python', 'WebSockets', 'Twilio Voice', 'Gemini API', 'PostgreSQL'],
-    accentColor: 'teal',
-  },
 ];
 
-export const VALUE_PILLARS: ValuePillar[] = [
+// Export PROJECTS as alias to SOLUTIONS for compatibility
+export const PROJECTS = SOLUTIONS;
+export type ProjectItem = SolutionItem;
+
+export const CLIENT_COMMITMENTS: ValuePillar[] = [
   {
-    title: 'High-Speed Delivery & Clean Code',
-    highlight: 'Working MVP in 10-20 Days',
-    description: 'We do not drag projects out over months. Led by Ram Chavan & Varad Edke, we deliver rapid working milestones every week so you see real progress immediately.',
-    metric: '2-3x',
-    metricLabel: 'Faster turnaround compared to traditional consulting firms',
+    title: 'Milestone-Based Payments',
+    highlight: 'Pay As We Ship',
+    description: 'We do not charge massive upfront fees. Billing is split into clear stages: 30% advance on architecture kickoff, 40% only after you test the working staging build, and the final 30% upon live deployment.',
+    metric: '3-Stage',
+    metricLabel: 'Milestone structure aligned with verified software delivery',
     points: [
-      'Weekly live staging demos of working software',
-      'No unnecessary meetings—direct developer communication',
-      'Rigorous automated testing for zero bugs on launch',
+      'Zero surprise invoices or hidden charges',
+      'You test working software before paying the second milestone',
+      '100% money-back guarantee if kickoff sprint does not meet specs',
     ],
   },
   {
-    title: 'Clean, Maintainable Architecture',
-    highlight: 'Zero Technical Bloat',
-    description: 'We build with clean modern standards: React, Next.js, TypeScript, Python, and cloud services. Clean code that is easy to extend as your business scales.',
+    title: 'Weekly Staging Releases',
+    highlight: 'Test Every Friday',
+    description: 'You will never wonder what is happening with your project. We deploy working software to a private URL every week so you can test features on your own phone or laptop.',
+    metric: 'Every Friday',
+    metricLabel: 'Live clickable demo builds for immediate team feedback',
+    points: [
+      'Direct hands-on testing of features as they are built',
+      'Quick feedback turnaround to tweak UI/UX early',
+      'Continuous progress visibility without technical jargon',
+    ],
+  },
+  {
+    title: '100% Code & IP Handover',
+    highlight: 'Zero Vendor Lock-in',
+    description: 'Every line of code, design file, database schema, and deployment credential belongs entirely to your business upon completion. We provide complete documentation and GitHub repo access.',
     metric: '100%',
-    metricLabel: 'Code ownership transferred to you with full documentation',
+    metricLabel: 'Intellectual property and source code ownership transfer',
     points: [
-      'Full intellectual property & GitHub repo transfer',
-      'Clean modular folder structures and clean comments',
-      'No proprietary lock-in or recurring code licensing fees',
+      'Complete Git repository and production environment handover',
+      'Clean modular architecture that your internal team can extend',
+      'No proprietary licensing fees or recurring code charges',
     ],
   },
   {
-    title: 'Local Presence & Direct Accountability',
+    title: 'Local Presence & Direct Founder Access',
     highlight: 'Karvenagar, Pune Office',
-    description: 'You work directly with co-founders Ram Chavan & Varad Edke. We understand local business needs as well as global tech standards.',
-    metric: '1-on-1',
-    metricLabel: 'Founder-led project management and architectural oversight',
+    description: 'You communicate directly with Ram Chavan and Varad Edke. We welcome in-person meetings at our Karvenagar office or online video calls over Google Meet.',
+    metric: 'Direct 1-on-1',
+    metricLabel: 'Direct WhatsApp and phone access to Ram & Varad',
     points: [
-      'In-person meetings available in Pune & Maharashtra',
-      'Dedicated phone, WhatsApp, and email response',
-      'Tailored solutions built specifically for your business model',
+      'In-person meetings welcome across Pune, Kothrud, Baner, Hinjawadi',
+      'Guaranteed response to calls and messages within 2 hours',
+      '30-day post-launch warranty with dedicated maintenance support',
     ],
-  },
-  {
-    title: 'Ongoing Support & Rapid SLA',
-    highlight: 'Post-Launch Care & Maintenance',
-    description: 'We stand firmly behind our work. After deployment, we provide bug-free warranty support, security patches, and rapid assistance whenever you need it.',
-    metric: '< 2 hrs',
-    metricLabel: 'Average inquiry & support response turnaround',
-    points: [
-      'Dedicated WhatsApp support channel for quick help',
-      'Regular backups, security audits, and speed optimizations',
-      'Flexible maintenance packages tailored to your growth',
-    ],
-  },
-];
-
-export const TESTIMONIALS = [
-  {
-    name: 'Sandeep Patil',
-    role: 'Director',
-    company: 'Patil Industrial Solutions, Pune',
-    quote: 'Ram Chavan and Varad Edke at Friends IT Solutions transformed our outdated company catalog into a modern web portal that loads instantly. Their communication was direct, honest, and the project was delivered a week ahead of schedule.',
-    stat: 'Delivered in 14 Days',
-  },
-  {
-    name: 'Anjali Sharma',
-    role: 'Founder & CEO',
-    company: 'Zenith Health Clinics',
-    quote: 'The WhatsApp AI assistant and patient booking app they built completely streamlined our front desk. Patients can book in seconds, and our staff saves 3 hours of phone calls every day. Highly recommended!',
-    stat: '+180% Patient Bookings',
-  },
-  {
-    name: 'Nitin Joshi',
-    role: 'Operations Head',
-    company: 'LogixExpress Logistics, Mumbai',
-    quote: 'Finding trustworthy engineers who truly understand automated workflows is rare. Friends IT Solutions automated our dispatch sync seamlessly. Whenever we need support, Varad and Ram respond right away.',
-    stat: 'Zero Downtime',
   },
 ];

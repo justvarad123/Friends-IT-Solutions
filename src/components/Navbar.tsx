@@ -1,213 +1,239 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, ArrowUpRight, Code, Phone, Sparkles } from 'lucide-react';
+import { Menu, X, ArrowUpRight, Code, Phone, Sparkles, Lock, Calendar, Layers, Cpu, Calculator, Users, Mail } from 'lucide-react';
 import { COMPANY_INFO } from '../data/content';
+import { useRouter, RoutePath } from '../context/RouterContext';
 
 interface NavbarProps {
   onOpenQuote: () => void;
+  adminUser?: string | null;
 }
 
-export function Navbar({ onOpenQuote }: NavbarProps) {
+export function Navbar({ onOpenQuote, adminUser }: NavbarProps) {
+  const { currentRoute, navigate } = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('hero');
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
-
-      const sections = ['services', 'projects', 'why-us', 'about', 'estimator', 'contact'];
-      const scrollPosition = window.scrollY + 200;
-
-      for (const sectionId of sections) {
-        const el = document.getElementById(sectionId);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(sectionId);
-            break;
-          }
-        }
-      }
     };
-
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
-    { label: 'Services', href: '#services', id: 'services' },
-    { label: 'Projects', href: '#projects', id: 'projects' },
-    { label: 'Why Us', href: '#why-us', id: 'why-us' },
-    { label: 'About', href: '#about', id: 'about' },
-    { label: 'Estimator', href: '#estimator', id: 'estimator' },
-    { label: 'Contact', href: '#contact', id: 'contact' },
+  // Close mobile menu on Escape key (WCAG compliance)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [mobileMenuOpen]);
+
+  const navLinks: { route: RoutePath; label: string; icon?: React.ElementType }[] = [
+    { route: 'home', label: 'Home' },
+    { route: 'services', label: 'Services' },
+    { route: 'solutions', label: 'Blueprints' },
+    { route: 'stack', label: 'Tech Stack' },
+    { route: 'estimator', label: 'Estimator' },
+    { route: 'book', label: 'Book Call' },
+    { route: 'about', label: 'About' },
+    { route: 'contact', label: 'Contact' },
   ];
 
-  const handleNavClick = (href: string) => {
+  const handleNavClick = (route: RoutePath) => {
+    navigate(route);
     setMobileMenuOpen(false);
-    const target = document.querySelector(href);
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
-    }
   };
 
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-200 ${
-          isScrolled
-            ? 'bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs py-3.5'
-            : 'bg-white/80 backdrop-blur-sm border-b border-slate-100 py-4'
-        }`}
+      {/* WCAG Skip-to-Content Link for Screen Readers & Keyboard Navigation */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:rounded-xl focus:shadow-xl focus:font-semibold focus:text-xs focus:ring-2 focus:ring-white outline-none"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between gap-8">
-            {/* Zone 1: Brand Wordmark with Pune highlight */}
-            <a
-              href="#"
-              className="flex items-center gap-2.5 text-slate-900 font-bold text-lg tracking-tight hover:opacity-90 transition-opacity whitespace-nowrap shrink-0 group"
-              onClick={(e) => {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-            >
-              <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-extrabold shadow-sm group-hover:bg-blue-700 transition-colors">
-                <Code className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="text-slate-900 font-extrabold tracking-tight text-base block leading-tight">
-                  {COMPANY_INFO.name}
-                </span>
-                <span className="text-[11px] text-slate-500 font-normal block leading-none mt-0.5">
-                  Karvenagar, Pune
-                </span>
-              </div>
-            </a>
+        Skip to main content
+      </a>
 
-            {/* Zone 2: Navigation Links */}
-            <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-slate-600">
-              {navLinks.map((link) => {
-                const isActive = activeSection === link.id;
-                return (
-                  <a
-                    key={link.id}
-                    href={link.href}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleNavClick(link.href);
-                    }}
-                    className={`transition-colors whitespace-nowrap shrink-0 hover:text-blue-600 ${
-                      isActive ? 'text-blue-600 font-semibold' : ''
-                    }`}
-                  >
-                    {link.label}
-                  </a>
-                );
-              })}
-            </nav>
-
-            {/* Zone 3: 1 Primary CTA Button & Direct Call Quick Action */}
-            <div className="hidden sm:flex items-center gap-3 shrink-0">
-              <div className="hidden xl:flex items-center gap-2 text-xs font-semibold text-slate-700 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200">
-                <Phone className="w-3.5 h-3.5 text-blue-600" />
-                <span>Varad:</span>
-                <a href="tel:+918329863893" className="text-slate-900 font-mono hover:text-blue-600 font-bold">8329863893</a>
-                <span className="text-slate-300">|</span>
-                <span>Ram:</span>
-                <a href="tel:+919359032001" className="text-slate-900 font-mono hover:text-blue-600 font-bold">9359032001</a>
-              </div>
-              <a
-                href="tel:+918329863893"
-                className="hidden lg:inline-flex xl:hidden items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-700 hover:text-blue-600 bg-slate-100 hover:bg-slate-200/80 rounded-lg transition-colors whitespace-nowrap shrink-0"
-              >
-                <Phone className="w-3.5 h-3.5 text-blue-600" />
-                <span>+91 83298 63893</span>
-              </a>
-
-              <button
-                type="button"
-                onClick={onOpenQuote}
-                className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors whitespace-nowrap shrink-0 shadow-sm active:scale-[0.98]"
-              >
-                <span>Get a Quote</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
-
-            {/* Mobile Hamburger Button */}
-            <div className="flex md:hidden items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-100 border border-slate-200 transition-colors"
-                aria-label="Toggle navigation menu"
-                aria-expanded={mobileMenuOpen}
-              >
-                {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Mobile Drawer */}
-      {mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 md:hidden bg-white/98 backdrop-blur-xl pt-20 px-6 pb-8 flex flex-col justify-between border-b border-slate-200 shadow-xl animate-in fade-in duration-150">
-          <div className="flex flex-col space-y-3 pt-4">
-            <div className="pb-3 mb-2 border-b border-slate-100">
-              <p className="text-xs font-semibold text-blue-600">FRIENDS IT SOLUTIONS</p>
-              <p className="text-xs text-slate-500">Ram Chavan & Varad Edke · Karvenagar, Pune</p>
-            </div>
-            {navLinks.map((link) => (
-              <a
-                key={link.id}
-                href={link.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNavClick(link.href);
-                }}
-                className="text-base font-semibold text-slate-800 hover:text-blue-600 py-2 border-b border-slate-100 transition-colors"
-              >
-                {link.label}
-              </a>
-            ))}
+      {/* Top Engineering Hub Info Strip */}
+      <div className="bg-slate-950 text-slate-300 text-[11px] py-1.5 px-4 border-b border-slate-800">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <span className="flex items-center gap-1.5 text-slate-400">
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              Pune Engineering Hub: <strong className="text-white font-medium">Karvenagar</strong>
+            </span>
+            <span className="hidden sm:inline text-slate-700" aria-hidden="true">|</span>
+            <span className="hidden sm:inline text-slate-400">
+              Mon–Sat, 9:00 AM – 8:00 PM IST
+            </span>
           </div>
 
-          <div className="pt-6 border-t border-slate-100 flex flex-col gap-2.5">
-            <div className="grid grid-cols-2 gap-2">
-              <a
-                href="tel:+918329863893"
-                className="py-2.5 px-3 text-center text-xs font-bold text-slate-800 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors flex items-center justify-center gap-1.5"
-              >
-                <Phone className="w-3.5 h-3.5 text-blue-600" />
-                <span>Call Varad</span>
-              </a>
-              <a
-                href="tel:+919359032001"
-                className="py-2.5 px-3 text-center text-xs font-bold text-slate-800 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors flex items-center justify-center gap-1.5"
-              >
-                <Phone className="w-3.5 h-3.5 text-blue-600" />
-                <span>Call Ram</span>
-              </a>
-            </div>
+          <div className="flex items-center gap-3">
             <button
               type="button"
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenQuote();
-              }}
-              className="w-full py-3 px-4 text-center text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition-colors flex items-center justify-center gap-2 shadow-sm"
+              onClick={() => navigate('contact')}
+              className="text-slate-300 hover:text-white transition-colors flex items-center gap-1 focus-visible:ring-1 focus-visible:ring-blue-400 rounded outline-none"
             >
-              <span>Get a Quote</span>
-              <ArrowUpRight className="w-4 h-4" />
+              <Mail className="w-3 h-3 text-blue-400" />
+              <span>Contact Us</span>
             </button>
-            <p className="text-[11px] text-center text-slate-500">
-              Direct response from Ram Chavan & Varad Edke
-            </p>
+            <span className="text-slate-700" aria-hidden="true">|</span>
+            {/* Founder Portal Direct Link */}
+            <button
+              type="button"
+              onClick={() => navigate('admin')}
+              className="text-slate-400 hover:text-white flex items-center gap-1 transition-colors rounded p-0.5"
+              title="Founder Secure Access"
+              aria-label="Founder Admin Portal"
+            >
+              <Lock className="w-3 h-3 text-amber-400" />
+              <span className="text-[10px] font-mono">
+                {adminUser ? `Admin (${adminUser.split(' ')[0]})` : 'Founder Portal'}
+              </span>
+            </button>
           </div>
         </div>
-      )}
+      </div>
+
+      {/* Main Sticky Navigation */}
+      <header
+        role="banner"
+        className={`sticky top-0 z-40 transition-all duration-200 ${
+          isScrolled
+            ? 'bg-white/95 backdrop-blur-md shadow-xs border-b border-slate-200/80 py-2.5'
+            : 'bg-white border-b border-slate-100 py-3.5'
+        }`}
+      >
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between">
+          {/* Brand Logo */}
+          <button
+            type="button"
+            onClick={() => handleNavClick('home')}
+            className="flex items-center gap-2.5 group text-left focus-visible:ring-2 focus-visible:ring-blue-600 rounded-lg p-0.5 outline-none"
+            aria-label="Friends IT Solutions Home"
+          >
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white shadow-xs group-hover:scale-105 transition-transform">
+              <Code className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <span className="text-base font-extrabold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors block leading-tight">
+                Friends IT
+              </span>
+              <span className="text-[10px] text-slate-500 font-medium block">
+                Solutions · Pune
+              </span>
+            </div>
+          </button>
+
+          {/* Desktop Nav Items */}
+          <nav role="navigation" aria-label="Primary Navigation" className="hidden lg:flex items-center gap-1">
+            {navLinks.map((item) => {
+              const isActive = currentRoute === item.route;
+              return (
+                <button
+                  key={item.route}
+                  type="button"
+                  onClick={() => handleNavClick(item.route)}
+                  aria-current={isActive ? 'page' : undefined}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all focus-visible:ring-2 focus-visible:ring-blue-600 outline-none ${
+                    isActive
+                      ? 'bg-blue-50 text-blue-600 font-bold'
+                      : 'text-slate-600 hover:text-slate-950 hover:bg-slate-50'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              );
+            })}
+          </nav>
+
+          {/* Right Action CTAs */}
+          <div className="hidden sm:flex items-center gap-2.5">
+            <button
+              type="button"
+              onClick={() => navigate('estimator')}
+              className="px-3.5 py-2 text-xs font-semibold text-slate-700 hover:text-slate-950 hover:bg-slate-100 rounded-xl transition-colors focus-visible:ring-2 focus-visible:ring-slate-900 outline-none"
+            >
+              Get Estimate
+            </button>
+
+            <button
+              type="button"
+              onClick={onOpenQuote}
+              className="px-4 py-2 text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-xs hover:shadow transition-all flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 outline-none"
+            >
+              <span>Instant Quote</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="lg:hidden p-2 rounded-xl text-slate-700 hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-blue-600 outline-none"
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-navigation"
+            aria-label={mobileMenuOpen ? 'Close Menu' : 'Open Menu'}
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
+
+        {/* Mobile Navigation Drawer */}
+        {mobileMenuOpen && (
+          <div
+            id="mobile-navigation"
+            className="lg:hidden bg-white border-b border-slate-200 px-4 pt-3 pb-6 space-y-2 animate-in slide-in-from-top-2 duration-150"
+          >
+            <div className="grid grid-cols-2 gap-1.5">
+              {navLinks.map((item) => {
+                const isActive = currentRoute === item.route;
+                return (
+                  <button
+                    key={item.route}
+                    type="button"
+                    onClick={() => handleNavClick(item.route)}
+                    className={`p-2.5 rounded-xl text-left text-xs font-semibold transition-all ${
+                      isActive
+                        ? 'bg-blue-600 text-white font-bold'
+                        : 'bg-slate-50 text-slate-700 hover:bg-slate-100'
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="pt-3 border-t border-slate-100 flex flex-col gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenQuote();
+                }}
+                className="w-full py-2.5 rounded-xl bg-blue-600 text-white text-xs font-semibold shadow-xs flex items-center justify-center gap-1.5"
+              >
+                <span>Instant Project Quote</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => handleNavClick('admin')}
+                className="w-full py-2 rounded-xl bg-slate-100 text-slate-700 text-xs font-semibold flex items-center justify-center gap-1.5"
+              >
+                <Lock className="w-3.5 h-3.5 text-amber-500" />
+                <span>Founder Secure Console</span>
+              </button>
+            </div>
+          </div>
+        )}
+      </header>
     </>
   );
 }

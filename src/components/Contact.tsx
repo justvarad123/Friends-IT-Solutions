@@ -272,20 +272,29 @@ export function Contact({ initialService, scopeSummary }: ContactProps) {
 
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
                     <a
-                      href={COMPANY_INFO.whatsappUrl}
+                      href={`https://wa.me/${assignedFounder === 'Ram Chavan' ? '919359032001' : '918329863893'}?text=${encodeURIComponent(
+                        `Hello ${assignedFounder}! I just submitted project inquiry [${submittedLeadId}] on your website.\n\nName: ${name}\nPhone: ${phone}\nService: ${service}\nBudget: ${budget}\nDetails: ${details}`
+                      )}`}
                       target="_blank"
                       rel="noreferrer"
                       className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl transition-colors shadow-sm"
                     >
                       <MessageCircle className="w-4 h-4" />
-                      <span>Ping on WhatsApp</span>
+                      <span>Open WhatsApp with {assignedFounder}</span>
+                    </a>
+                    <a
+                      href={`tel:${assignedFounder === 'Ram Chavan' ? '+919359032001' : '+918329863893'}`}
+                      className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-bold text-slate-800 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors"
+                    >
+                      <Phone className="w-4 h-4 text-blue-600" />
+                      <span>Call {assignedFounder} Now</span>
                     </a>
                     <button
                       type="button"
                       onClick={handleReset}
-                      className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors"
+                      className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors"
                     >
-                      <span>Submit Another Inquiry</span>
+                      <span>New Inquiry</span>
                     </button>
                   </div>
                 </div>

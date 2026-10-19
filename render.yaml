@@ -1,0 +1,36 @@
+# Render Blueprint Configuration for Friends IT Solutions
+# You can choose between Option 1 (Static Site - Recommended for zero-cost & instant load)
+# or Option 2 (Web Service - Node.js Express server)
+
+services:
+  # OPTION 1: Static Site (Fast, Free, No cold starts)
+  - type: web
+    name: friends-it-solutions-static
+    env: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: SAMEORIGIN
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+
+  # OPTION 2: Web Service (Node.js + Express server)
+  # Uncomment below if you explicitly need a Web Service on Render:
+  # - type: web
+  #   name: friends-it-solutions-service
+  #   env: node
+  #   plan: free
+  #   buildCommand: npm install && npm run build
+  #   startCommand: npm run start
+  #   envVars:
+  #     - key: NODE_ENV
+  #       value: production
+  #     - key: PORT
+  #       value: 10000

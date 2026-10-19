@@ -15,21 +15,23 @@ export function LiveLeadsDesk({ adminUser, onLogout, onCallNow }: LiveLeadsDeskP
   const [visitors, setVisitors] = useState<VisitorLog[]>([]);
   const [leads, setLeads] = useState<LeadInquiry[]>([]);
 
-  // If not logged in as admin, this desk is completely invisible to public users!
-  if (!adminUser) {
-    return null;
-  }
-
   const refreshData = () => {
+    if (!adminUser) return;
     setVisitors(getStoredVisitors());
     setLeads(getStoredLeads());
   };
 
   useEffect(() => {
+    if (!adminUser) return;
     refreshData();
     const interval = setInterval(refreshData, 3000);
     return () => clearInterval(interval);
-  }, []);
+  }, [adminUser]);
+
+  // If not logged in as admin, this desk is completely invisible to public users!
+  if (!adminUser) {
+    return null;
+  }
 
   const exportCSV = () => {
     const header = 'ID,Name,Email,Phone,Service,Budget,SubmittedAt,AssignedTo\n';
